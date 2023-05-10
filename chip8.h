@@ -35,4 +35,12 @@ class Chip8{
         void OP_8xy2(); // AND Vx, Vy
         void OP_8xy3(); // XOR Vx, Vy
         void OP_8xy4(); // ADD Vx, Vy
+        void OP_8xy5(); // SUB Vx, Vy
+        void OP_8xy6(); // SHR Vx
+        void OP_8xy7(); // SUBN Vx, Vy
+        void OP_8xy8(); // SHL Vx
+        void OP_9xy0(); // SNE Vx, Vy
+        void OP_Annn(); // LD I, addr
+        void OP_Bnnn(); // JP V0, addr
+        void OP_Cxkk(); // RND Vx, byte
 };

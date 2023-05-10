@@ -163,3 +163,68 @@ void Chip8::OP_8xy4(){
     }
     reg[reg_idx1] = sum & 0xFFu;
 }
+
+void Chip8::OP_8xy5(){
+    uint8_t reg_idx1 = (opcode & 0x0F00) >> 8u;
+    uint8_t reg_idx2 = (opcode & 0x00F0) >> 4u;
+
+    if(reg[reg_idx1] > reg[reg_idx2]){
+        reg[15u] = 1;
+    }
+    else{
+        reg[15u] = 0;
+    }
+    reg[reg_idx1] -= reg[reg_idx2];
+}
+
+void Chip8::OP_8xy6(){
+    uint8_t reg_idx1 = (opcode & 0x0F00) >> 8u;
+    reg[0xF] = (reg[reg_idx1] & 0x1u);
+    reg[reg_idx1] >>= 1;
+}
+
+void Chip8::OP_8xy7(){
+    uint8_t reg_idx1 = (opcode & 0x0F00) >> 8u;
+    uint8_t reg_idx2 = (opcode & 0x00F0) >> 4u;
+
+    if(reg[reg_idx1] < reg[reg_idx2]){
+        reg[15u] = 1;
+    }
+    else{
+        reg[15u] = 0;
+    }
+    reg[reg_idx1] = reg[reg_idx2] - reg[reg_idx1];
+}
+
+void Chip8::OP_8xy8(){
+    uint8_t reg_idx1 = (opcode & 0x0F00) >> 8u;
+    reg[0xF] = (reg[reg_idx1] & 0x80u);
+    reg[reg_idx1] <<= 1;
+}
+
+void Chip8::OP_9xy0(){
+    uint8_t reg_idx1 = (opcode & 0x0F00) >> 8u;
+    uint8_t reg_idx2 = (opcode & 0x00F0) >> 4u;
+
+    if(reg[reg_idx1] != reg[reg_idx2]){
+        pc += 2;
+    }
+}
+
+void Chip8::OP_Annn(){
+    uint16_t addr = (opcode & 0x0FFFu);
+    index = addr;
+}
+
+void Chip8::OP_Bnnn(){
+    uint16_t addr = (opcode & 0x0FFFu);
+    pc = reg[0] + addr;
+}
+
+void Chip8::OP_Cxkk(){
+    uint8_t byte = (opcode & 0x00FFu);
+    uint8_t reg_idx1 = (opcode & 0x0F00u);
+    reg[reg_idx1] = randByte(randGen) & byte;
+}
+
+
